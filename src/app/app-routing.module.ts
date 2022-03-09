@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { DashboardResolver } from './dashboard/dashboard.resolver';
+import { OverviewComponent } from './overview/overview.component';
+import { OverviewResolver } from './overview/overview.resolver';
 
 const routes: Routes = [
   {
     path: '',
-    component: DashboardComponent,
+    component: OverviewComponent,
     resolve: {
-      workData: DashboardResolver
+      workData: OverviewResolver
     }
   },
   {

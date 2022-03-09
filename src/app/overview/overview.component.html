@@ -1,0 +1,64 @@
+<div class="grid-container">
+  <h1 class="mat-h1">Dashboard</h1>
+  <mat-card>
+    <p>{{ workData.length }} results loaded for time from {{ startDate.toUTC() }} to {{ endDate.toUTC() }}</p>
+    <mat-divider></mat-divider>
+    <p>Unique user IDs (students): {{ uniqueUserIds.length }}</p>
+    <mat-divider></mat-divider>
+    <p>Unique exercise IDs: {{ uniqueExerciseIds.length }}</p>
+  </mat-card>
+
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let user of usersData">
+      <mat-expansion-panel-header>
+        <mat-panel-title>User ID: {{ user.UserId }}</mat-panel-title>
+        <mat-panel-description>(user details)</mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <mat-card *ngFor="let exercise of user.Exercises" class="m-b-1">
+        <mat-card-title>Subject: {{ exercise.Subject }}</mat-card-title>
+        <mat-card-subtitle>Difficulty: {{ exercise.Difficulty }}</mat-card-subtitle>
+        <mat-card-content>
+          <p>
+            Domain: <strong>{{ exercise.Domain }}</strong>
+          </p>
+          <p>
+            LearningObjective: <strong>{{ exercise.LearningObjective }}</strong>
+          </p>
+
+          <table mat-table [dataSource]="exercise.Data">
+            <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="SubmittedAnswerId">
+              <th mat-header-cell *matHeaderCellDef>Answer ID</th>
+              <td mat-cell *matCellDef="let element">{{ element.SubmittedAnswerId }}</td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="SubmitDateTime">
+              <th mat-header-cell *matHeaderCellDef>Submitted at</th>
+              <td mat-cell *matCellDef="let element">{{ element.SubmitDateTime | stringToDateTime }}</td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="Correct">
+              <th mat-header-cell *matHeaderCellDef>Correct</th>
+              <td mat-cell *matCellDef="let element">{{ element.Correct }}</td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="Progress">
+              <th mat-header-cell *matHeaderCellDef>Progress</th>
+              <td mat-cell *matCellDef="let element">{{ element.Progress }}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
